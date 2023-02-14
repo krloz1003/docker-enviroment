@@ -1,0 +1,64 @@
+server {
+        listen 80 ;        
+        root /var/www/html;
+        index index.html index.htm index.php app.php app_dev.php;
+        
+        server_name localhost;
+
+        charset utf-8;
+
+        # handle static files within project.. break at end to avoid recursive redirect        
+        location /dugrop{                
+                rewrite ^/dugrop/(.*)$ /dugrop/public/index.php?$1 last;
+        }
+        
+        location /ci{                
+                rewrite ^/ci/(.*)$ /ci/public/index.php?$1 last;
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        location /ppa{
+                rewrite ^/ppa/(.*)$ /ppa/public/index.php?$1 last;
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        location /busmandato{
+                rewrite ^/busmandato/back/(.*)$ /busmandato/back/public/index.php?$1 last;
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        location = /favicon.ico { log_not_found off; access_log off; }
+        location = /robots.txt  { access_log off; log_not_found off; }
+
+        #error_page 404 /index.php;
+
+        location ~ \.php$ {
+                try_files $uri /index.php =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass app:9000;
+                
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+                ############# IMPORTANT - This section adjusts the request URI sent to laravel #################
+                set $laravel_uri $request_uri;
+                if ($laravel_uri ~ project(\d*)(/?.*)$) {
+                        set $laravel_uri $2;
+                }
+
+        }
+
+        location ~* \.(jpg|jpeg|png|gif|css|js|ico|html|ttf|woff|woff2|json)$ {
+                access_log off;
+                expires max;
+                log_not_found off;
+        }
+
+        # Deny .htaccess file access
+        location ~ /\.ht {
+                deny all;
+        }
+
+
+}
+
