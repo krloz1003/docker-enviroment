@@ -30,7 +30,7 @@ server {
         listen 9080 default_server;
         listen 127.0.0.1;
 
-        root /var/www/html/dugrop/public;
+        root /var/www/html/sica/public;
 
         # Add index.php to the list if you are using PHP
         index index.php index.html;
@@ -58,7 +58,7 @@ server {
         listen 9081;
         listen 127.0.0.1;
 
-        root /var/www/html/ci/public;
+        root /var/www/html/ecep/public;
 
         # Add index.php to the list if you are using PHP
         index index.php index.html;

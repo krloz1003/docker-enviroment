@@ -25,9 +25,9 @@ services:
       - 80:80
       - 9080:9080
       - 9081:9081
-      - 9082:9082
-      - 9083:9083
-      - 9084:9084
+      #- 9082:9082
+      #- 9083:9083
+      #- 9084:9084
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./code:/var/www/html

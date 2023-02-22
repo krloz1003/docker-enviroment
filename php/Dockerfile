@@ -41,8 +41,8 @@ RUN apt-get update
 RUN apt-get -y --no-install-recommends install unixodbc-dev  msodbcsql17
 RUN apt-get -y --no-install-recommends install libxml2-dev
 
-RUN pecl install sqlsrv pdo_sqlsrv xdebug
-RUN docker-php-ext-enable sqlsrv pdo_sqlsrv xdebug
+RUN pecl install sqlsrv pdo_sqlsrv
+RUN docker-php-ext-enable sqlsrv pdo_sqlsrv
 
 # Install the package for the composer
 RUN curl -sS https://getcomposer.org/installer -o ~/composer-setup.php
